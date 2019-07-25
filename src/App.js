@@ -1,23 +1,27 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import Header from './components/Header/Header';
 import './App.css';
 import StudentCard from './components/StudentCard/StudentCard';
 
+//App Component that provides the basis for the entire web application.
+//Houses the Header and Student Components.
 class App extends Component {
   
+  //State consists of the attendance percentage you want to filter on as well as the array of students received
+  //based on the filter
   state = {
     attendPercent:'',
     studentArray:[]
   }
   
-
-  onInputChange = (attend, studentList) => {
-    this.setState({attendPercent: attend});
+  //Child component calls this function that updates the parent component's state
+  onInputChange = (attendance, studentList) => {
+    this.setState({attendPercent: attendance});
     this.setState({studentArray:studentList});
-    this.forceUpdate();
   }
 
+  //Renders Header with logo, attendance and button and also creates a StudentCard for each element in the 
+  //student array, using the map function
   render(){
     return (
       <div className="App">
@@ -25,11 +29,9 @@ class App extends Component {
           <Header
             onInputChange={this.onInputChange}
           />
-          <div className='student-cards-list'>{
+          <div className='student-cards-list'>
+          {
             this.state.studentArray.map(el=>{
-              if(this.state.studentArray.length===0){
-                return(<StudentCard/>);
-              }
               return(
                 <StudentCard
                   key={el.studentId}
@@ -52,6 +54,7 @@ class App extends Component {
       </div>
     );
   }
+
 }
 
 export default App;
